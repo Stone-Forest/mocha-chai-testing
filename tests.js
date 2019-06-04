@@ -15,6 +15,41 @@ describe('sumTwoSmallestNum()', () => {
       assert.equal(sumTwoSmallestNum([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]), 2);
     });
 
+    // генерация тестов
+    function makeTest(numOfCycles) {
+      function getRandomInRange(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+  
+      function makeRandomArray() {
+        const MIN_ARR_LENGTH = 2,
+              MAX_ARR_LENGTH = 30,
+              MIN_ARR_VALUE = -1000,
+              MAX_ARR_VALUE = 1000,
+              arr = [];
+
+        const arrLength = getRandomInRange(MIN_ARR_LENGTH, MAX_ARR_LENGTH);
+
+        for (let i = 0; i < arrLength; i++) {
+          arr.push(getRandomInRange(MIN_ARR_VALUE, MAX_ARR_VALUE));
+        }
+
+        return arr;
+      }
+
+      for (let i = 0; i < numOfCycles; i++) {
+        const arr = makeRandomArray(),
+              sortedArr = arr.slice().sort((a, b) => a - b),
+              expected = sortedArr[0] + sortedArr[1];
+
+        it(`Сумма для [${arr}] равна ${expected}`, () => {
+          assert.equal(sumTwoSmallestNum(arr), expected);
+        });
+      }
+    }
+
+    makeTest(30);
+
   });
 
   describe('В функцию передан не массив', () => {
